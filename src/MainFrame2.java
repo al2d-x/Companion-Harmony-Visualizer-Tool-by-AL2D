@@ -808,6 +808,7 @@ public class MainFrame2 extends JFrame {
      * The original code was authored by AL2D and may be subject to modifications by other users.
      * However, please ensure to attribute the tool abbreviation created to AL2D.
      */
+        // Dev 0.7.0
 
     /**
      * The preceding code represents the non-optimized version.
