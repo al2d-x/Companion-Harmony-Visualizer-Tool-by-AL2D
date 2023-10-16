@@ -136,8 +136,6 @@ public class VanillaTableModel extends AbstractTableModel {
                     } else if (hates1.equals(otherName) || hates2.equals(otherName)) {
                         companion2.setCellColor("red");
                     }
-
-                    System.out.println("VTM: Changed to " + companion2.getCellColor() + "  at: " + companion2.getvName());
                 }
             }
         }
