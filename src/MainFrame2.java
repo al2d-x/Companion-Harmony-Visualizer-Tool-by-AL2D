@@ -1,10 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -113,6 +110,12 @@ public class MainFrame2 extends JFrame {
             table.getColumnModel().getColumn(i).setCellRenderer(compositeRenderer);
         }
 
+        // Hide Color column
+        TableColumnModel columnModelHide = table.getColumnModel();
+        TableColumn column = columnModelHide.getColumn(9);
+        column.setMinWidth(0);
+        column.setMaxWidth(0);
+        column.setResizable(false);
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);

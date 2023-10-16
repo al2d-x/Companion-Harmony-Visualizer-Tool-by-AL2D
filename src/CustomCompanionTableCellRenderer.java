@@ -24,9 +24,6 @@ public class CustomCompanionTableCellRenderer extends DefaultTableCellRenderer {
             } else {
                 c.setBackground(Color.WHITE); // Default to blue if no matching color is found
             }
-
-            System.out.println("CCTCR, Color value: " + color + "     column: "+ column + "     row: " + row);
-
         } else {
             // Handle the case when the cell value is null or not a valid color
             c.setBackground(Color.WHITE); // Default to white
