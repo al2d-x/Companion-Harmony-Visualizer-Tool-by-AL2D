@@ -4,14 +4,26 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainFrame2 extends JFrame {
+
     private JPanel contentPane;
     private JTable table;
     private JPanel panelEast_1;
 
+    static final Color green = new Color(22, 130, 0);
+    static final Color red = new Color(204, 0, 0);
+    static final Color gray = new Color(160, 160, 160);
+
+    int numSkills = 24;
+
+
+    public static int[] skillCounts = new int[24];
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -130,7 +142,7 @@ public class MainFrame2 extends JFrame {
         contentPane.add(panelWest, BorderLayout.WEST);
         GridBagLayout gbl_panelWest = new GridBagLayout();
         gbl_panelWest.columnWidths = new int[]{0, 0};
-        gbl_panelWest.rowHeights = new int[] {30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl_panelWest.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl_panelWest.columnWeights = new double[]{0.0, Double.MIN_VALUE};
         gbl_panelWest.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelWest.setLayout(gbl_panelWest);
@@ -271,49 +283,11 @@ public class MainFrame2 extends JFrame {
         gbc_matheldCheckBox.gridy = 16;
         panelWest.add(matheldCheckBox, gbc_matheldCheckBox);
 
-// Add action listeners for the checkboxes
-        // Create a common action listener template
-        ActionListener checkBoxActionListener = e -> {
-            JCheckBox checkBox = (JCheckBox) e.getSource(); // Get the source of the event
-            String companionName = checkBox.getText();
-            CompanionVanilla companion = vanillaTableModel.getCompanionByName(companionName);
-
-            if (checkBox.isSelected()) {
-                companion.setvIsChoosen(true);
-            } else {
-                companion.setvIsChoosen(false);
-            }
-            vanillaTableModel.setRowBackgroundColor();
-            // Call fireTableDataChanged once after all changes are made
-            SwingUtilities.invokeLater(() -> vanillaTableModel.fireTableDataChanged());
-        };
-// Assign the common action listener to all checkboxes
-        deshaviCheckBox.addActionListener(checkBoxActionListener);
-        firentisCheckBox.addActionListener(checkBoxActionListener);
-        jeremusCheckBox.addActionListener(checkBoxActionListener);
-        marnidCheckBox.addActionListener(checkBoxActionListener);
-        ymiraCheckBox.addActionListener(checkBoxActionListener);
-        katrinCheckBox.addActionListener(checkBoxActionListener);
-        bundukCheckBox.addActionListener(checkBoxActionListener);
-        klethiCheckBox.addActionListener(checkBoxActionListener);
-        alayenCheckBox.addActionListener(checkBoxActionListener);
-        artimennerCheckBox.addActionListener(checkBoxActionListener);
-        borchaCheckBox.addActionListener(checkBoxActionListener);
-        nizarCheckBox.addActionListener(checkBoxActionListener);
-        rolfCheckBox.addActionListener(checkBoxActionListener);
-        baheshturCheckBox.addActionListener(checkBoxActionListener);
-        lezalitCheckBox.addActionListener(checkBoxActionListener);
-        matheldCheckBox.addActionListener(checkBoxActionListener);
-
-
-
-
-
         panelEast_1 = new JPanel();
         contentPane.add(panelEast_1, BorderLayout.EAST);
         GridBagLayout gbl_panelEast = new GridBagLayout();
-        gbl_panelEast.columnWidths = new int[] {0, 20};
-        gbl_panelEast.rowHeights = new int[] {30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30};
+        gbl_panelEast.columnWidths = new int[]{0, 20};
+        gbl_panelEast.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30};
         gbl_panelEast.columnWeights = new double[]{0.0, 0.0};
         gbl_panelEast.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelEast_1.setLayout(gbl_panelEast);
@@ -348,7 +322,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsIronflesh.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsIronflesh.gridx = 0;
         gbc_lblpsIronflesh.gridy = 2;
-        lblpsIronflesh.setForeground(Color.RED); // Set text color to red
+        lblpsIronflesh.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsIronflesh, gbc_lblpsIronflesh);
 
         JLabel label_timesIronflesh = new JLabel("0");
@@ -364,7 +338,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPowerStrike.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPowerStrike.gridx = 0;
         gbc_lblpsPowerStrike.gridy = 3;
-        lblpsPowerStrike.setForeground(Color.RED); // Set text color to red
+        lblpsPowerStrike.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsPowerStrike, gbc_lblpsPowerStrike);
 
         JLabel label_timesPowerStrike = new JLabel("0");
@@ -380,7 +354,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPowerThrow.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPowerThrow.gridx = 0;
         gbc_lblpsPowerThrow.gridy = 4;
-        lblpsPowerThrow.setForeground(Color.RED); // Set text color to red
+        lblpsPowerThrow.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsPowerThrow, gbc_lblpsPowerThrow);
 
         JLabel label_timesPowerThrow = new JLabel("0");
@@ -396,7 +370,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPowerDraw.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPowerDraw.gridx = 0;
         gbc_lblpsPowerDraw.gridy = 5;
-        lblpsPowerDraw.setForeground(Color.RED); // Set text color to red
+        lblpsPowerDraw.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsPowerDraw, gbc_lblpsPowerDraw);
 
         JLabel label_timesPowerDraw = new JLabel("0");
@@ -412,7 +386,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsWeaponMaster.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsWeaponMaster.gridx = 0;
         gbc_lblpsWeaponMaster.gridy = 6;
-        lblpsWeaponMaster.setForeground(Color.RED); // Set text color to red
+        lblpsWeaponMaster.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsWeaponMaster, gbc_lblpsWeaponMaster);
 
         JLabel label_timesWeaponMaster = new JLabel("0");
@@ -429,7 +403,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsShield.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsShield.gridx = 0;
         gbc_lblpsShield.gridy = 7;
-        lblpsShield.setForeground(Color.RED); // Set text color to red
+        lblpsShield.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsShield, gbc_lblpsShield);
 
         JLabel label_timesShield = new JLabel("0");
@@ -445,7 +419,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsAthletics.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsAthletics.gridx = 0;
         gbc_lblpsAthletics.gridy = 8;
-        lblpsAthletics.setForeground(Color.RED); // Set text color to red
+        lblpsAthletics.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsAthletics, gbc_lblpsAthletics);
 
         JLabel label_timesAthletics = new JLabel("0");
@@ -461,7 +435,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsRiding.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsRiding.gridx = 0;
         gbc_lblpsRiding.gridy = 9;
-        lblpsRiding.setForeground(Color.RED); // Set text color to red
+        lblpsRiding.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsRiding, gbc_lblpsRiding);
 
         JLabel label_timesRiding = new JLabel("0");
@@ -477,7 +451,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsHorseArchery.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsHorseArchery.gridx = 0;
         gbc_lblpsHorseArchery.gridy = 10;
-        lblpsHorseArchery.setForeground(Color.RED); // Set text color to red
+        lblpsHorseArchery.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsHorseArchery, gbc_lblpsHorseArchery);
 
         JLabel label_timesHorseArchery = new JLabel("0");
@@ -493,7 +467,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsLooting.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsLooting.gridx = 0;
         gbc_lblpsLooting.gridy = 11;
-        lblpsLooting.setForeground(Color.RED); // Set text color to red
+        lblpsLooting.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsLooting, gbc_lblpsLooting);
 
         JLabel label_timesLooting = new JLabel("0");
@@ -510,7 +484,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsTrainer.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsTrainer.gridx = 0;
         gbc_lblpsTrainer.gridy = 12;
-        lblpsTrainer.setForeground(Color.RED); // Set text color to red
+        lblpsTrainer.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsTrainer, gbc_lblpsTrainer);
 
         JLabel label_timesTrainer = new JLabel("0");
@@ -526,7 +500,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsTracking.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsTracking.gridx = 0;
         gbc_lblpsTracking.gridy = 13;
-        lblpsTracking.setForeground(Color.RED); // Set text color to red
+        lblpsTracking.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsTracking, gbc_lblpsTracking);
 
         JLabel label_timesTracking = new JLabel("0");
@@ -542,7 +516,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsTactics.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsTactics.gridx = 0;
         gbc_lblpsTactics.gridy = 14;
-        lblpsTactics.setForeground(Color.RED); // Set text color to red
+        lblpsTactics.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsTactics, gbc_lblpsTactics);
 
         JLabel label_timesTactics = new JLabel("0");
@@ -558,7 +532,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPathFinding.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPathFinding.gridx = 0;
         gbc_lblpsPathFinding.gridy = 15;
-        lblpsPathFinding.setForeground(Color.RED); // Set text color to red
+        lblpsPathFinding.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsPathFinding, gbc_lblpsPathFinding);
 
         JLabel label_timesPathFinding = new JLabel("0");
@@ -568,14 +542,14 @@ public class MainFrame2 extends JFrame {
         gbc_label_timesPathFinding.gridy = 15;
         panelEast_1.add(label_timesPathFinding, gbc_label_timesPathFinding);
 
-        JLabel lblpsSpotting2 = new JLabel("(PA/I) Spotting");
+        JLabel lblpsSpotting = new JLabel("(PA/I) Spotting");
         GridBagConstraints gbc_lblpsSpotting2 = new GridBagConstraints();
         gbc_lblpsSpotting2.anchor = GridBagConstraints.WEST;
         gbc_lblpsSpotting2.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsSpotting2.gridx = 0;
         gbc_lblpsSpotting2.gridy = 16;
-        lblpsSpotting2.setForeground(Color.RED); // Set text color to red
-        panelEast_1.add(lblpsSpotting2, gbc_lblpsSpotting2);
+        lblpsSpotting.setForeground(red); // Set text color to red
+        panelEast_1.add(lblpsSpotting, gbc_lblpsSpotting2);
 
         JLabel label_timesSpotting = new JLabel("0");
         GridBagConstraints gbc_label_timesSpotting = new GridBagConstraints();
@@ -590,7 +564,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsInventoryManagement.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsInventoryManagement.gridx = 0;
         gbc_lblpsInventoryManagement.gridy = 17;
-        lblpsInventoryManagement.setForeground(Color.RED); // Set text color to red
+        lblpsInventoryManagement.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsInventoryManagement, gbc_lblpsInventoryManagement);
 
         JLabel label_timesInventoryManagement = new JLabel("0");
@@ -606,7 +580,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsWoundTreatment.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsWoundTreatment.gridx = 0;
         gbc_lblpsWoundTreatment.gridy = 18;
-        lblpsWoundTreatment.setForeground(Color.RED); // Set text color to red
+        lblpsWoundTreatment.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsWoundTreatment, gbc_lblpsWoundTreatment);
 
         JLabel label_timesWoundTreatment = new JLabel("0");
@@ -622,7 +596,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsSurgery.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsSurgery.gridx = 0;
         gbc_lblpsSurgery.gridy = 19;
-        lblpsSurgery.setForeground(Color.RED); // Set text color to red
+        lblpsSurgery.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsSurgery, gbc_lblpsSurgery);
 
         JLabel label_timesWoundSurgery = new JLabel("0");
@@ -638,7 +612,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsFirstAid.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsFirstAid.gridx = 0;
         gbc_lblpsFirstAid.gridy = 20;
-        lblpsFirstAid.setForeground(Color.RED); // Set text color to red
+        lblpsFirstAid.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsFirstAid, gbc_lblpsFirstAid);
 
         JLabel label_timesFirstAid = new JLabel("0");
@@ -654,7 +628,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsEngineer.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsEngineer.gridx = 0;
         gbc_lblpsEngineer.gridy = 21;
-        lblpsEngineer.setForeground(Color.RED); // Set text color to red
+        lblpsEngineer.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsEngineer, gbc_lblpsEngineer);
 
         JLabel label_timesEngineer = new JLabel("0");
@@ -671,7 +645,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPersuasion.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPersuasion.gridx = 0;
         gbc_lblpsPersuasion.gridy = 22;
-        lblpsPersuasion.setForeground(Color.RED); // Set text color to red
+        lblpsPersuasion.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsPersuasion, gbc_lblpsPersuasion);
 
         JLabel label_timesPersuasion = new JLabel("0");
@@ -687,7 +661,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPrisonerManagement.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPrisonerManagement.gridx = 0;
         gbc_lblpsPrisonerManagement.gridy = 23;
-        lblpsPrisonerManagement.setForeground(Color.RED); // Set text color to red
+        lblpsPrisonerManagement.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsPrisonerManagement, gbc_lblpsPrisonerManagement);
 
         JLabel label_timesPrisionerManagement = new JLabel("0");
@@ -703,7 +677,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsLeadership.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsLeadership.gridx = 0;
         gbc_lblpsLeadership.gridy = 24;
-        lblpsLeadership.setForeground(Color.RED); // Set text color to red
+        lblpsLeadership.setForeground(gray); // Set text color to red
         panelEast_1.add(lblpsLeadership, gbc_lblpsLeadership);
 
         JLabel label_timesLeadership = new JLabel("0");
@@ -719,7 +693,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsTrade.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsTrade.gridx = 0;
         gbc_lblpsTrade.gridy = 25;
-        lblpsTrade.setForeground(Color.RED); // Set text color to red
+        lblpsTrade.setForeground(red); // Set text color to red
         panelEast_1.add(lblpsTrade, gbc_lblpsTrade);
 
         JLabel label_timesTrader = new JLabel("0");
@@ -729,8 +703,248 @@ public class MainFrame2 extends JFrame {
         gbc_label_timesTrader.gridy = 25;
         panelEast_1.add(label_timesTrader, gbc_label_timesTrader);
 
+
+// Add action listeners for the checkboxes
+        // Create a common action listener template
+        ActionListener checkBoxActionListener = e -> {
+            JCheckBox checkBox = (JCheckBox) e.getSource(); // Get the source of the event
+            String companionName = checkBox.getText();
+            CompanionVanilla companion = vanillaTableModel.getCompanionByName(companionName);
+
+            boolean isSelected = checkBox.isSelected();
+            companion.setvIsChoosen(isSelected);
+            vanillaTableModel.setRowBackgroundColor();
+
+            // Extract data from the JTable and create the list
+            ArrayList<CompanionVanillaSmol> companionVanillaSmolList = new ArrayList<>();
+            for (int row = 0; row < vanillaTableModel.getRowCount(); row++) {
+                boolean smolChoosen = vanillaTableModel.getValueAt(row, 0).toString().equals("X");
+                String smolName = vanillaTableModel.getValueAt(row, 1).toString();
+                String smolSkills = vanillaTableModel.getValueAt(row, 7).toString();
+
+                CompanionVanillaSmol companionRow = new CompanionVanillaSmol(smolChoosen, smolName, smolSkills);
+                companionVanillaSmolList.add(companionRow);
+            }
+
+            for (int i = 0; i < numSkills; i++) {
+                skillCounts[i] = 0;
+            }
+
+            label_timesIronflesh.setText(String.valueOf(skillCounts[Skills.IRONFLESH.getValue()]));
+            label_timesPowerStrike.setText(String.valueOf(skillCounts[Skills.POWERSTRIKE.getValue()]));
+            label_timesPowerThrow.setText(String.valueOf(skillCounts[Skills.POWERTHROW.getValue()]));
+            label_timesPowerDraw.setText(String.valueOf(skillCounts[Skills.POWERDRAW.getValue()]));
+            label_timesWeaponMaster.setText(String.valueOf(skillCounts[Skills.WEAPONMASTER.getValue()]));
+            label_timesShield.setText(String.valueOf(skillCounts[Skills.SHIELD.getValue()]));
+            label_timesAthletics.setText(String.valueOf(skillCounts[Skills.ATHLETICS.getValue()]));
+            label_timesRiding.setText(String.valueOf(skillCounts[Skills.RIDING.getValue()]));
+            label_timesHorseArchery.setText(String.valueOf(skillCounts[Skills.HORSEARCHERY.getValue()]));
+            label_timesLooting.setText(String.valueOf(skillCounts[Skills.LOOTING.getValue()]));
+            label_timesTrainer.setText(String.valueOf(skillCounts[Skills.TRAINER.getValue()]));
+            label_timesTracking.setText(String.valueOf(skillCounts[Skills.TRACKING.getValue()]));
+            label_timesTactics.setText(String.valueOf(skillCounts[Skills.TACTICS.getValue()]));
+            label_timesPathFinding.setText(String.valueOf(skillCounts[Skills.PATHFINDING.getValue()]));
+            label_timesSpotting.setText(String.valueOf(skillCounts[Skills.SPOTTING.getValue()]));
+            label_timesInventoryManagement.setText(String.valueOf(skillCounts[Skills.INVENTORYMANAGEMENT.getValue()]));
+            label_timesWoundTreatment.setText(String.valueOf(skillCounts[Skills.WOUNDTREATMENT.getValue()]));
+            label_timesWoundSurgery.setText(String.valueOf(skillCounts[Skills.SURGERY.getValue()]));
+            label_timesFirstAid.setText(String.valueOf(skillCounts[Skills.FIRSTAID.getValue()]));
+            label_timesEngineer.setText(String.valueOf(skillCounts[Skills.ENGINEER.getValue()]));
+            label_timesPersuasion.setText(String.valueOf(skillCounts[Skills.PERSUASION.getValue()]));
+            label_timesPrisionerManagement.setText(String.valueOf(skillCounts[Skills.PRISONERMANAGEMENT.getValue()]));
+            label_timesLeadership.setText(String.valueOf(skillCounts[Skills.LEADERSHIP.getValue()]));
+            label_timesTrader.setText(String.valueOf(skillCounts[Skills.TRADE.getValue()]));
+
+            lblpsIronflesh.setForeground(red);
+            lblpsPowerStrike.setForeground(red);
+            lblpsPowerThrow.setForeground(red);
+            lblpsPowerDraw.setForeground(red);
+            lblpsWeaponMaster.setForeground(red);
+            lblpsShield.setForeground(gray);
+            lblpsAthletics.setForeground(red);
+            lblpsRiding.setForeground(red);
+            lblpsHorseArchery.setForeground(red);
+            lblpsLooting.setForeground(gray);
+            lblpsTrainer.setForeground(red);
+            lblpsTracking.setForeground(red);
+            lblpsTactics.setForeground(red);
+            lblpsPathFinding.setForeground(red);
+            lblpsSpotting.setForeground(red);
+            lblpsInventoryManagement.setForeground(gray);
+            lblpsWoundTreatment.setForeground(red);
+            lblpsSurgery.setForeground(red);
+            lblpsFirstAid.setForeground(red);
+            lblpsEngineer.setForeground(red);
+            lblpsPersuasion.setForeground(gray);
+            lblpsPrisonerManagement.setForeground(gray);
+            lblpsLeadership.setForeground(gray);
+            lblpsTrade.setForeground(red);
+
+            for (CompanionVanillaSmol smol : companionVanillaSmolList) {
+                String smolSkills = smol.getvSkills();
+
+                if (smol.isvIsChoosen()) {
+
+                    if (smolSkills.contains("Ironflesh")) {
+                        skillCounts[Skills.IRONFLESH.getValue()]++;
+                        label_timesIronflesh.setText(String.valueOf(skillCounts[Skills.IRONFLESH.getValue()]));
+                        lblpsIronflesh.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Power Strike")) {
+                        skillCounts[Skills.POWERSTRIKE.getValue()]++;
+                        label_timesPowerStrike.setText(String.valueOf(skillCounts[Skills.POWERSTRIKE.getValue()]));
+                        lblpsPowerStrike.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Power Throw")) {
+                        skillCounts[Skills.POWERTHROW.getValue()]++;
+                        label_timesPowerThrow.setText(String.valueOf(skillCounts[Skills.POWERTHROW.getValue()]));
+                        lblpsPowerThrow.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Power Draw")) {
+                        skillCounts[Skills.POWERDRAW.getValue()]++;
+                        label_timesPowerDraw.setText(String.valueOf(skillCounts[Skills.POWERDRAW.getValue()]));
+                        lblpsPowerDraw.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Weapon Master")) {
+                        skillCounts[Skills.WEAPONMASTER.getValue()]++;
+                        label_timesWeaponMaster.setText(String.valueOf(skillCounts[Skills.WEAPONMASTER.getValue()]));
+                        lblpsWeaponMaster.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Shield")) {
+                        skillCounts[Skills.SHIELD.getValue()]++;
+                        label_timesShield.setText(String.valueOf(skillCounts[Skills.SHIELD.getValue()]));
+                        lblpsShield.setForeground(green);
+                    }
+
+                    if (smolSkills.contains("Athletics")) {
+                        skillCounts[Skills.ATHLETICS.getValue()]++;
+                        label_timesAthletics.setText(String.valueOf(skillCounts[Skills.ATHLETICS.getValue()]));
+                        lblpsAthletics.setForeground(green);
+                    }
+                    if (smolSkills.contains("Riding")) {
+                        skillCounts[Skills.RIDING.getValue()]++;
+                        label_timesRiding.setText(String.valueOf(skillCounts[Skills.RIDING.getValue()]));
+                        lblpsRiding.setForeground(green);
+                    }
+                    if (smolSkills.contains("Horse Archery")) {
+                        skillCounts[Skills.HORSEARCHERY.getValue()]++;
+                        label_timesHorseArchery.setText(String.valueOf(skillCounts[Skills.HORSEARCHERY.getValue()]));
+                        lblpsHorseArchery.setForeground(green);
+                    }
+                    if (smolSkills.contains("Looting")) {
+                        skillCounts[Skills.LOOTING.getValue()]++;
+                        label_timesLooting.setText(String.valueOf(skillCounts[Skills.LOOTING.getValue()]));
+                        lblpsLooting.setForeground(green);
+                    }
+                    if (smolSkills.contains("Trainer")) {
+                        skillCounts[Skills.TRAINER.getValue()]++;
+                        label_timesTrainer.setText(String.valueOf(skillCounts[Skills.TRAINER.getValue()]));
+                        lblpsTrainer.setForeground(green);
+                    }
+                    if (smolSkills.contains("Tracking")) {
+                        skillCounts[Skills.TRACKING.getValue()]++;
+                        label_timesTracking.setText(String.valueOf(skillCounts[Skills.TRACKING.getValue()]));
+                        lblpsTracking.setForeground(green);
+                    }
+                    if (smolSkills.contains("Tactics")) {
+                        skillCounts[Skills.TACTICS.getValue()]++;
+                        label_timesTactics.setText(String.valueOf(skillCounts[Skills.TACTICS.getValue()]));
+                        lblpsTactics.setForeground(green);
+                    }
+                    if (smolSkills.contains("Pathfinding")) {
+                        skillCounts[Skills.PATHFINDING.getValue()]++;
+                        label_timesPathFinding.setText(String.valueOf(skillCounts[Skills.PATHFINDING.getValue()]));
+                        lblpsPathFinding.setForeground(green);
+                    }
+                    if (smolSkills.contains("Spotting")) {
+                        skillCounts[Skills.SPOTTING.getValue()]++;
+                        label_timesSpotting.setText(String.valueOf(skillCounts[Skills.SPOTTING.getValue()]));
+                        lblpsSpotting.setForeground(green);
+                    }
+                    if (smolSkills.contains("Inventory Management")) {
+                        skillCounts[Skills.INVENTORYMANAGEMENT.getValue()]++;
+                        label_timesInventoryManagement.setText(String.valueOf(skillCounts[Skills.INVENTORYMANAGEMENT.getValue()]));
+                        lblpsInventoryManagement.setForeground(green);
+                    }
+                    if (smolSkills.contains("Wound Treatment")) {
+                        skillCounts[Skills.WOUNDTREATMENT.getValue()]++;
+                        label_timesWoundTreatment.setText(String.valueOf(skillCounts[Skills.WOUNDTREATMENT.getValue()]));
+                        lblpsWoundTreatment.setForeground(green);
+                    }
+                    if (smolSkills.contains("Surgery")) {
+                        skillCounts[Skills.SURGERY.getValue()]++;
+                        label_timesWoundSurgery.setText(String.valueOf(skillCounts[Skills.SURGERY.getValue()]));
+                        lblpsSurgery.setForeground(green);
+                    }
+                    if (smolSkills.contains("First Aid")) {
+                        skillCounts[Skills.FIRSTAID.getValue()]++;
+                        label_timesFirstAid.setText(String.valueOf(skillCounts[Skills.FIRSTAID.getValue()]));
+                        lblpsFirstAid.setForeground(green);
+                    }
+                    if (smolSkills.contains("Engineer")) {
+                        skillCounts[Skills.ENGINEER.getValue()]++;
+                        label_timesEngineer.setText(String.valueOf(skillCounts[Skills.ENGINEER.getValue()]));
+                        lblpsEngineer.setForeground(green);
+                    }
+                    if (smolSkills.contains("Persuasion")) {
+                        skillCounts[Skills.PERSUASION.getValue()]++;
+                        label_timesPersuasion.setText(String.valueOf(skillCounts[Skills.PERSUASION.getValue()]));
+                        lblpsPersuasion.setForeground(green);
+                    }
+                    if (smolSkills.contains("Prisoner Management")) {
+                        skillCounts[Skills.PRISONERMANAGEMENT.getValue()]++;
+                        label_timesPrisionerManagement.setText(String.valueOf(skillCounts[Skills.PRISONERMANAGEMENT.getValue()]));
+                        lblpsPrisonerManagement.setForeground(green);
+                    }
+                    if (smolSkills.contains("Leadership")) {
+                        skillCounts[Skills.LEADERSHIP.getValue()]++;
+                        label_timesLeadership.setText(String.valueOf(skillCounts[Skills.LEADERSHIP.getValue()]));
+                        lblpsLeadership.setForeground(green);
+                    }
+                    if (smolSkills.contains("Trade")) {
+                        skillCounts[Skills.TRADE.getValue()]++;
+                        label_timesTrader.setText(String.valueOf(skillCounts[Skills.TRADE.getValue()]));
+                        lblpsTrade.setForeground(green);
+                    }
+                }
+
+
+
+
+            }
+
+            // Call fireTableDataChanged once after all changes are made
+            SwingUtilities.invokeLater(() -> vanillaTableModel.fireTableDataChanged());
+        };
+
+// Assign the common action listener to all checkboxes
+        deshaviCheckBox.addActionListener(checkBoxActionListener);
+        firentisCheckBox.addActionListener(checkBoxActionListener);
+        jeremusCheckBox.addActionListener(checkBoxActionListener);
+        marnidCheckBox.addActionListener(checkBoxActionListener);
+        ymiraCheckBox.addActionListener(checkBoxActionListener);
+        katrinCheckBox.addActionListener(checkBoxActionListener);
+        bundukCheckBox.addActionListener(checkBoxActionListener);
+        klethiCheckBox.addActionListener(checkBoxActionListener);
+        alayenCheckBox.addActionListener(checkBoxActionListener);
+        artimennerCheckBox.addActionListener(checkBoxActionListener);
+        borchaCheckBox.addActionListener(checkBoxActionListener);
+        nizarCheckBox.addActionListener(checkBoxActionListener);
+        rolfCheckBox.addActionListener(checkBoxActionListener);
+        baheshturCheckBox.addActionListener(checkBoxActionListener);
+        lezalitCheckBox.addActionListener(checkBoxActionListener);
+        matheldCheckBox.addActionListener(checkBoxActionListener);
+
+
+
+
         chckbxOnlyPartyskillsRelevant.addActionListener(e -> {
-            if(chckbxOnlyPartyskillsRelevant.isSelected()){
+            if (chckbxOnlyPartyskillsRelevant.isSelected()) {
                 lblpsIronflesh.setVisible(false);
                 label_timesIronflesh.setVisible(false);
                 lblpsPowerStrike.setVisible(false);
@@ -759,7 +973,7 @@ public class MainFrame2 extends JFrame {
                 label_timesLeadership.setVisible(false);
                 lblpsPersuasion.setVisible(false);
                 label_timesPersuasion.setVisible(false);
-            }else{
+            } else {
                 lblpsIronflesh.setVisible(true);
                 label_timesIronflesh.setVisible(true);
                 lblpsPowerStrike.setVisible(true);
@@ -806,12 +1020,11 @@ public class MainFrame2 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
-
     /**
      * The original code was authored by AL2D and may be subject to modifications by other users.
      * However, please ensure to attribute the tool abbreviation created to AL2D.
      */
-        // Dev 0.7.0
+    // Dev 0.8.0
 
     /**
      * The preceding code represents the non-optimized version.
