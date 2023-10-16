@@ -140,5 +140,4 @@ public class VanillaTableModel extends AbstractTableModel {
             }
         }
     }
-
 }
