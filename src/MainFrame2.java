@@ -4,6 +4,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +46,7 @@ public class MainFrame2 extends JFrame {
 
     public MainFrame2() {
 
-        setTitle("Companion Harmony Visualizer Tool by AL2D");
+        setTitle("Companion Harmony Visualizer Tool by AL2D   -   v0.9.1 (Version only for closed testing)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1157, 864);
 
@@ -61,8 +65,9 @@ public class MainFrame2 extends JFrame {
         JMenu menuHelp = new JMenu("Help");
         menuBar.add(menuHelp);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("About...");
-        menuHelp.add(mntmNewMenuItem);
+        JMenuItem menuItemAbout = new JMenuItem("About...");
+        menuHelp.add(menuItemAbout);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -133,7 +138,7 @@ public class MainFrame2 extends JFrame {
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
 
-        JLabel lblNewLabel = new JLabel("TEXT_CHANGE_LATER");
+        JLabel lblNewLabel = new JLabel(" ");
         panelNorth.add(lblNewLabel);
 
         JPanel panelEast = new JPanel();
@@ -1018,8 +1023,9 @@ public class MainFrame2 extends JFrame {
                 };
 
                 for (JCheckBox checkBox : checkBoxes) {
-                    checkBox.setSelected(true);
-                    checkBox.doClick();
+                    if(checkBox.isSelected()){
+                        checkBox.doClick();
+                    }
                 }
 
             }
@@ -1168,6 +1174,116 @@ public class MainFrame2 extends JFrame {
                 // Show the dialog with the text
                 JOptionPane.showMessageDialog(null, scrollPane, "Skill Information", JOptionPane.INFORMATION_MESSAGE);
             }
+        });
+
+        menuItemAbout.addActionListener(e ->{
+            JOptionPane.showMessageDialog(null, "Companion Harmony Visualizer Tool for Mount and Blade Warband Vanilla coded by AL2D in Oktober 2023 (Dc: AL2D#3015) \n Official Website: https://github.com/al2d-x/Companion-Harmony-Visualizer-Tool-by-AL2D", "About", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        menuItemExport.addActionListener(e -> {
+            JFileChooser fc = new JFileChooser();
+            int userChoice = fc.showSaveDialog(null);
+
+            if (userChoice == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                if (!file.getName().toLowerCase().endsWith(".txt")) {
+                    file = new File(file.getParentFile(), file.getName() + ".txt");
+                }
+
+                try (FileWriter fw = new FileWriter(file);
+                     BufferedWriter bw = new BufferedWriter(fw)) {
+                    bw.write("------ COMPANIONS CHOSEN ------");
+                    bw.newLine();
+
+                    for (int row = 0; row < vanillaTableModel.getRowCount(); row++) {
+                        boolean choosen = "X".equals(vanillaTableModel.getValueAt(row, 0));
+                        String name = vanillaTableModel.getValueAt(row, 1).toString();
+                        String hates = vanillaTableModel.getValueAt(row, 5).toString();
+                        boolean isNoble = "X".equals(vanillaTableModel.getValueAt(row, 6));
+                        String isNobleString = isNoble ? "Yes" : "No";
+                        String skills = vanillaTableModel.getValueAt(row, 7).toString();
+
+                        if (choosen) {
+                            StringBuilder sum = new StringBuilder()
+                                    .append("Companion Name: ").append(name).append("\n")
+                                    .append("Is Noble: ").append(isNobleString).append("\n")
+                                    .append("Skills: ").append(skills).append("\n")
+                                    .append("Hate: ").append(hates).append("\n");
+
+                            bw.write(sum.toString());
+                            bw.newLine();
+                        }
+                    }
+
+                    bw.newLine();
+                    bw.write("------ PARTY SKILLS COVERED AT THE BEGINNING ------");
+                    bw.newLine();
+
+                    String[] skillNames = {
+                            "Trainer", "Tracking", "Tactics", "Pathfinding",
+                            "Spotting", "Wound Treatment", "Surgery",
+                            "First Aid", "Engineer", "Trade"
+                    };
+
+                    for (int i = 0; i < skillNames.length; i++) {
+                        String skillName = skillNames[i];
+                        int skillValue = skillCounts[i];
+                        String yesNo = (skillValue != 0) ? "Yes" : "No";
+
+                        StringBuilder skillInfo = new StringBuilder()
+                                .append(skillName).append(": ").append(yesNo);
+
+                        if (yesNo.equals("Yes")) {
+                            skillInfo.append(" | Times: ").append(skillValue);
+                        }
+
+                        bw.write(skillInfo.toString());
+                        bw.newLine();
+                    }
+                    bw.newLine();
+                    bw.newLine();
+                    bw.write("----- INFO ABOUT FILE -----");
+                    bw.newLine();
+                    bw.write("This Exported File was auto-generated by the Companion Harmony Visualizer Tool available on GitHub:");
+                    bw.newLine();
+                    bw.write("https://github.com/al2d-x/Companion-Harmony-Visualizer-Tool-by-AL2D");
+
+                    JOptionPane.showMessageDialog(null, "File created successfully: " + file.getName(), "File Created", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error creating the file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+
+        menuItemExit.addActionListener(e -> {
+            String formattedText =
+                            "$$$$$$$\\                      \n" +
+                            "$$  __$$\\                     \n" +
+                            "$$ |  $$ |$$\\   $$\\  $$$$$$\\  \n" +
+                            "$$$$$$$\\ |$$ |  $$ |$$  __$$\\ \n" +
+                            "$$  __$$\\ $$ |  $$ |$$$$$$$$ |\n" +
+                            "$$ |  $$ |$$ |  $$ |$$   ____|\n" +
+                            "$$$$$$$  |\\$$$$$$$ |\\$$$$$$$\\ \n" +
+                            "\\_______/  \\____$$ | \\_______|\n" +
+                            "          $$\\   $$ |          \n" +
+                            "          \\$$$$$$  |          \n" +
+                            "           \\______/           \n";
+
+            JOptionPane pane = new JOptionPane(formattedText, JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = pane.createDialog("Bye :)");
+            dialog.setModal(false);
+
+            Timer timer = new Timer(1500, e1 -> {
+                dialog.dispose();
+                System.exit(0);
+            });
+            timer.setRepeats(false);
+            timer.start();
+
+            dialog.setVisible(true);
         });
 
 
