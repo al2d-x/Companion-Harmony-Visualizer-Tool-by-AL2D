@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CompanionHarmonyVisualizerTool:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CompanionHarmonyVisualizerTool_jar</output-path>
+    <root id="archive" name="CompanionHarmonyVisualizerTool.jar">
+      <element id="module-output" name="CompanionHarmonyVisualizerTool" />
+    </root>
+  </artifact>
+</component>
