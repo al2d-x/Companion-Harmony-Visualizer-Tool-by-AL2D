@@ -73,15 +73,16 @@ public class MainFrame2 extends JFrame {
         contentPane.add(panelSouth, BorderLayout.SOUTH);
 
         JButton buttonReset = new JButton("Clear Selections");
-
         panelSouth.add(buttonReset);
 
         JButton buttonToolInfo = new JButton("Tool Information...");
-
         panelSouth.add(buttonToolInfo);
 
         JButton buttonCompanionInfo = new JButton("Companion Information...");
         panelSouth.add(buttonCompanionInfo);
+
+        JButton buttonSkillInfo = new JButton("Skill Information...");
+        panelSouth.add(buttonSkillInfo);
 
         JPanel panelWest = new JPanel();
 
@@ -1009,13 +1010,166 @@ public class MainFrame2 extends JFrame {
 
         buttonReset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                JCheckBox[] checkBoxes = {
+                        deshaviCheckBox, firentisCheckBox, jeremusCheckBox, marnidCheckBox, ymiraCheckBox,
+                        katrinCheckBox, bundukCheckBox, klethiCheckBox, alayenCheckBox, artimennerCheckBox,
+                        borchaCheckBox, nizarCheckBox, rolfCheckBox, baheshturCheckBox, lezalitCheckBox, matheldCheckBox
+                };
+
+                for (JCheckBox checkBox : checkBoxes) {
+                    checkBox.setSelected(true);
+                    checkBox.doClick();
+                }
+
             }
         });
 
         buttonToolInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String message = "Companion Harmony Visualizer Tool by AL2D\n\n" +
+                        "Empowering Your Mount & Blade: Warband Journey\n\n" +
+                        "Introduction:\n\n" +
+                        "Greetings, traveler of the virtual realm.\n" +
+                        "In the spirit of self-improvement, and driven by the desire to explore the world of programming,\n" +
+                        "I, AL2D, crafted the Companion Harmony Visualizer Tool in October 2023.\n" +
+                        "As a novice programmer, this project served as a personal challenge and a stepping stone in my journey through the realms of software development.\n\n" +
+                        "Reach Out and Connect:\n\n" +
+                        "Should you have questions or seek to engage in insightful discussions,\n" +
+                        "I encourage you to utilize the GitHub message discussion tab.\n" +
+                        "Alternatively, you can find me on Discord at AL2D#3015.\n\n" +
+                        "About the Tool:\n\n" +
+                        "In the world of Mount & Blade: Warband, the role of companions extends beyond mere story characters.\n" +
+                        "They are the backbone of your party, and their skills can make or break your journey.\n" +
+                        "If you've ever found yourself frustrated by the bickering of your companions,\n" +
+                        "akin to unruly schoolchildren, and longed for a solution to the puzzle of creating the perfect party,\n" +
+                        "look no further. The Companion Harmony Visualizer Tool is your answer.\n\n" +
+                        "What Does It Offer?\n\n" +
+                        "This tool provides you with the ability to construct your ideal companion combination.\n" +
+                        "It shifts the focus from the companions themselves as mere story characters to their invaluable role as your skillful backpack.\n" +
+                        "Say goodbye to the chaos and confusion of companion interactions and \n" +
+                        "hello to the creation of a harmonious and effective party that caters to your unique playstyle.\n\n" +
+                        "Why Choose This Tool?\n\n" +
+                        "- Streamlined Experience: With our user-friendly interface, you can effortlessly select companions and gain insight into their interactions and initial skills.\n" +
+                        "- Comprehensive Insights: Our tool provides you with in-depth explanations and the crucial ability to assess your party's harmony.\n" +
+                        "- Practicality: The 'Export' feature enables you to save your selected companions' details as a convenient txt file for reference.\n\n" +
+                        "Your Journey Begins with a less bitchy companion party.";
+
+                JTextArea textArea = new JTextArea(20, 60);
+                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14); // Change 14 to your preferred font size
+                textArea.setFont(verdanaFont);
+                textArea.setText(message);
+                textArea.setWrapStyleWord(true);
+                textArea.setLineWrap(true);
+                textArea.setCaretPosition(0);
+
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+                // Display the message in a dialog
+                JOptionPane.showMessageDialog(null, scrollPane, "Companion Harmony Visualizer Tool", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+
+        buttonCompanionInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Create a JTextArea to display the text
+                JTextArea textArea = new JTextArea(20, 60); // Rows x Columns
+                textArea.setWrapStyleWord(true);
+                textArea.setLineWrap(true);
+                textArea.setMargin(new Insets(10, 10, 10, 10));
+                textArea.setEditable(false);
+
+                // Create a JScrollPane to make the text scrollable
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+                // Add the text to the JTextArea
+                String companionGuideText = "Companions Compatibility Guide\n\n"
+                        + "In the world of Mount & Blade: Warband, heroes, often referred to as companions, come with their unique traits and preferences. When assessing compatibility, we distinguish between two categories:\n\n"
+                        + "- Green: Compatible Companions\n"
+                        + "- Red: Incompatible Companions\n\n"
+                        + "While I commonly refer to them as companions, it's essential to note that they are officially known as heroes in the game.\n\n"
+                        + "About Heroes or Companions:\n\n"
+                        + "Heroes or companions are unique troops with individual names, stories, skills, attributes, and equipment, all of which can be customized by you. Similar to the player character, monarchs, and vassals, heroes never meet their demise, only falling unconscious. Garrisons can never be their station, and in all games except for Mount & Blade II: Bannerlord, companions remain invincible.\n\n"
+                        + "Each hero has a preference, liking one other hero and disliking two others, often expressing their opinions after battles or during your journey. They also have preferences for certain actions and might engage with you if they disapprove of your choices, such as failing quests or running low on provisions.\n\n"
+                        + "Recruitment of Companions:\n\n"
+                        + "Companions can be found in taverns scattered throughout Calradia, but their locations are subject to change. Some may require a fee ranging from 100 to 500 denars to join your party, while five companions are willing to join you without charge. Regardless of the recruitment cost, they all demand wages based on their level. As there is no strict level cap for companions, their wages can exceed those of any other troop in the game as they level up.\n\n"
+                        + "Ways of Temporary Departure:\n\n"
+                        + "There are several scenarios in which you might temporarily lose a hero:\n\n"
+                        + "- If you voluntarily part ways with a hero, you can later pick them up again without a recruitment cost. Asking a traveler in a tavern can provide information about the whereabouts of any hero who was once in your group.\n"
+                        + "- If you're taken prisoner, you'll need to wait for your freedom. Upon release, some heroes might be set free with you, while others might be captured. You can either pay a Ransom Broker to free them for a fee (they will join you within 1-2 days), or you can rescue them as you would with any other prisoner. If a hero escapes or is released due to a peace treaty, you can find them in taverns as usual.\n"
+                        + "- Keeping heroes with mutual dislikes in the same group can lead to their departure as they decide to 'go back home' or 'settle down.' They can not be found via traveler as they do not respawn right away. Instead, it takes several weeks before they respawn, and you may have trouble finding them, which could be related to your renown. Some companions who left voluntarily may not reappear until your renown surpasses the level at which they departed by around 100 points. A traveler should be able to guide you to their location after this period.\n"
+                        + "- If you lend a hero to a lord via the Lend Companion quest, you can lose contact with them if that lord becomes hostile towards you or pledges loyalty to another faction. In such cases, you won't be able to reunite with that hero until several in-game weeks have passed. During this period, a traveler won't have information about their location, but the lost hero will eventually seek you out.\n\n"
+                        + "List of Heroes:\n\n"
+                        + "There are a total of 16 companions in the game, each with their likes, dislikes, recruitment costs, and specialized skills. The 'Skills' column displays each hero's primary skills, typically at level 3.\n\n"
+                        + "In Mount & Blade: Warband, you have the option to appoint your companions as lords, granting them towns, villages, or castles. However, be cautious when choosing companions for this role, as other vassals may be displeased with commoners holding such positions. Ideally, noble companions, such as Matheld, Lezalit, Rolf, Alayen, Baheshtur, and Firentis, are better suited for becoming vassals. If a hero becomes a lord and later defects from your faction, they can be found in taverns and re-recruited to your party. They will maintain their unique coat of arms, title, and the equipment they had as a lord.\n\n"
+                        + "A Rare Opportunity: Noble Companions\n\n"
+                        + "An exceptionally rare situation involving noble companions occurs when a lord is accused of treason while they are a prisoner. If the accused lord goes into exile instead of joining another faction, they remain imprisoned by their captors. In this unique circumstance, you can secure their freedom and attempt to recruit them into your party as a companion. If the lord accepts your offer, they will join your party like any other companion. However, this feature may not be entirely implemented, as some regular party dialogue options may be missing lines. Additionally, equipping them might involve a slight bug; you may need to enter the equipment menu, exit, and then re-enter it to properly display their inventory. You can reinstate them into the nobility by granting them a fief, but their female relatives, such as wives and daughters, may remain in a ransom dialog.\n\n"
+                        + "Dislike as Emissary:\n\n"
+                        + "In Warband, you have the option to send heroes on diplomatic missions to enhance your right to rule. However, this may negatively affect other heroes' opinions. The 'dislike as emissary' system follows a specific loop: each hero in the list dislikes the one immediately following them as an emissary.\n\n"
+                        + "Alayen → Baheshtur → Ymira → Deshavi → Bunduk → Nizar → Jeremus → Klethi → Marnid → Matheld → Firentis → Rolf → Artimenner → Katrin → Lezalit → Borcha → Alayen\n\n"
+                        + "Information primarily sourced from: Mount & Blade Wiki - Heroes (https://mountandblade.fandom.com/wiki/Heroes)";
+
+                textArea.setText(companionGuideText);
+                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14); // Change 14 to your preferred font size
+                textArea.setFont(verdanaFont);
+
+                // Show the dialog with the text
+                JOptionPane.showMessageDialog(null, scrollPane, "Companion Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+
+
+
+        buttonSkillInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Create a JTextArea to display the text
+                JTextArea textArea = new JTextArea(20, 60); // Rows x Columns
+                textArea.setWrapStyleWord(true);
+                textArea.setLineWrap(true);
+                textArea.setMargin(new Insets(10, 10, 10, 10));
+                textArea.setEditable(false);
+
+                // Create a JScrollPane to make the text scrollable
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+                // Add the text to the JTextArea
+                textArea.setText("Skill Proficiency Overview\n\n" +
+                        "Skills are portrayed on the right side, using the following color code:\n" +
+                        "Green: Skill is covered by at least one party member.\n" +
+                        "Red: Skill is not covered by any party member.\n" +
+                        "Yellow: Skill is not possible to be covered by the current party.\n" +
+                        "Please remember that theoretically, you could teach each companion any skill. The display on the right shows who has a headstart, but every companion can learn any skill according to your preferences.\n\n" +
+                        "Skills in Mount & Blade: Warband\n\n" +
+                        "In Mount & Blade: Warband, skills grant specific abilities and buffs to characters and parties. The effectiveness of a skill is determined by its level, with a maximum skill level of 10. There are 24 skills in total.\n\n" +
+                        "Skill Levels and Base Attributes:\n\n" +
+                        "Each skill has a corresponding base attribute.\n" +
+                        "A character's skill level cannot exceed one-third of their level in the base attribute (except with the use of books).\n" +
+                        "For example, Tactics has Intelligence as its base attribute, so if Intelligence is level 9, Tactics cannot surpass level 3.\n" +
+                        "Initial skill levels for players are determined by their character's background and may exceed this limitation.\n\n" +
+                        "Skill Types:\n\n" +
+                        "Skills come in three types:\n" +
+                        "Party Skill: Affects the entire party. The skill level is determined by the party member with the highest level in that skill.\n" +
+                        "Leader Skill: Similar to party skills but only the party leader's level in the skill is used.\n" +
+                        "Personal Skill: Impacts an individual party leader or companion. Generally, personal skills benefit only the individual.\n\n" +
+                        "Party Leader Skill Bonus:\n" +
+                        "A party skill's effectiveness is a combination of the skill level of the person with the best rank in it and a bonus based on your own rank in that skill.\n" +
+                        "The party skill bonus is applied even if you have the highest rank in the skill.\n\n" +
+                        "Please note that although Looting is a party skill, the player should level it to be effective." +
+                        "Information primarily sourced from: Mount & Blade Wiki - Skills (https://mountandblade.fandom.com/wiki/Skills)");
+                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14); // Change 14 to your preferred font size
+                textArea.setFont(verdanaFont);
+
+                // Show the dialog with the text
+                JOptionPane.showMessageDialog(null, scrollPane, "Skill Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
