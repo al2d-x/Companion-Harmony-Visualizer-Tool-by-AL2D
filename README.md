@@ -1,4 +1,5 @@
 ## ⚙️ AL2D's Companion Harmony Visualizer Tool
+The JAR is built using Java 1.8, so it's compatible even with older Java versions, like your "dinosaur" version! :)
 
 # 🌟Introduction
 
