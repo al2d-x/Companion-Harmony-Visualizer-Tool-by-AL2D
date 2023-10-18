@@ -1,5 +1,6 @@
 ## ⚙️ AL2D's Companion Harmony Visualizer Tool
-Download Jar Folder to use
+Download the 3 Files inside this folder here to use the tool:
+https://github.com/al2d-x/Companion-Harmony-Visualizer-Tool-by-AL2D/tree/main/out/artifacts/CompanionHarmonyVisualizerTool_jar
 
 # 🌟Introduction
 
