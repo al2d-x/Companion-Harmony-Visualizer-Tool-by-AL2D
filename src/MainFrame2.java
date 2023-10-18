@@ -8,23 +8,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+// MainFrame which basically builds mostly the GUI and does some work too
 public class MainFrame2 extends JFrame {
 
     private JPanel contentPane;
-    private JTable table;
     private JPanel panelEast_1;
 
     static final Color green = new Color(22, 130, 0);
     static final Color red = new Color(204, 0, 0);
     static final Color gray = new Color(160, 160, 160);
 
-    int numSkills = 24;
+    int numSkills = 24; // sets size for Skills array
 
 
     public static int[] skillCounts = new int[24];
@@ -46,9 +41,13 @@ public class MainFrame2 extends JFrame {
 
     public MainFrame2() {
 
-        setTitle("Companion Harmony Visualizer Tool by AL2D   -   v0.9.2 (Version only for closed testing)");
+        // sets up basics for Window creation of the MainFrame
+
+        setTitle("Companion Harmony Visualizer Tool by AL2D   -   v1.0.0");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1157, 864);
+
+        // Creates the menu on top:
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -68,6 +67,8 @@ public class MainFrame2 extends JFrame {
         JMenuItem menuItemAbout = new JMenuItem("About...");
         menuHelp.add(menuItemAbout);
 
+        // Layout Stuff:
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -76,6 +77,8 @@ public class MainFrame2 extends JFrame {
 
         JPanel panelSouth = new JPanel();
         contentPane.add(panelSouth, BorderLayout.SOUTH);
+
+        // Createss button on top:
 
         JButton buttonReset = new JButton("Clear Selections");
         panelSouth.add(buttonReset);
@@ -89,6 +92,8 @@ public class MainFrame2 extends JFrame {
         JButton buttonSkillInfo = new JButton("Skill Information...");
         panelSouth.add(buttonSkillInfo);
 
+        // Layout Stuff:
+
         JPanel panelWest = new JPanel();
 
         JScrollPane scrollPaneWest = new JScrollPane(panelWest);
@@ -101,19 +106,21 @@ public class MainFrame2 extends JFrame {
         JScrollPane scrollPaneTable = new JScrollPane();
         panelCenter.add(scrollPaneTable);
 
+        // Creates the JTable:
+
         VanillaTableModel vanillaTableModel = new VanillaTableModel();
         JTable table = new JTable(vanillaTableModel);
         scrollPaneTable.setViewportView(table);
 
         table.setRowHeight(30);
 
-        Dimension tableSize = new Dimension(1000, 530);
+        Dimension tableSize = new Dimension(1000, 530); // sets up a forced tableSize
         scrollPaneTable.setPreferredSize(tableSize);
 
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(3); //
-        columnModel.getColumn(1).setPreferredWidth(50); //
-        columnModel.getColumn(2).setPreferredWidth(50); //
+        columnModel.getColumn(0).setPreferredWidth(3); // the sizes are not 1:1
+        columnModel.getColumn(1).setPreferredWidth(50); // because it is forced
+        columnModel.getColumn(2).setPreferredWidth(50); // to fill up the tableSize
         columnModel.getColumn(3).setPreferredWidth(50); //
         columnModel.getColumn(4).setPreferredWidth(50); //
         columnModel.getColumn(5).setPreferredWidth(200); //
@@ -121,19 +128,22 @@ public class MainFrame2 extends JFrame {
         columnModel.getColumn(7).setPreferredWidth(250); //
         columnModel.getColumn(8).setPreferredWidth(2); //
 
-        // Create an instance of the composite renderer
+        // Applies the combined renderer:
         CompositeCellRenderer compositeRenderer = new CompositeCellRenderer();
 
         for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(compositeRenderer);
         }
 
-        // Hide Color column
+        // Hide Color column which is responsible for displaying, in which color the row should be displayed
+        // Theoretically could be put out from the TableModel but for safety reasons is kept in
         TableColumnModel columnModelHide = table.getColumnModel();
         TableColumn column = columnModelHide.getColumn(9);
         column.setMinWidth(0);
         column.setMaxWidth(0);
         column.setResizable(false);
+
+        // Layout Stuff:
 
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
@@ -152,6 +162,10 @@ public class MainFrame2 extends JFrame {
         gbl_panelWest.columnWeights = new double[]{0.0, Double.MIN_VALUE};
         gbl_panelWest.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelWest.setLayout(gbl_panelWest);
+
+        // Creates a label and all visual CheckBoxes on the left
+        // I could have created a for loop to generate them, but I decided not to,
+        // because they would be annoymous objects then, which I don't really like to work with
 
         JLabel labelCompanions = new JLabel("Choose the Companions   ");
         GridBagConstraints gbc_labelCompanions = new GridBagConstraints();
@@ -289,6 +303,8 @@ public class MainFrame2 extends JFrame {
         gbc_matheldCheckBox.gridy = 16;
         panelWest.add(matheldCheckBox, gbc_matheldCheckBox);
 
+        // Layout Stuff:
+
         panelEast_1 = new JPanel();
         contentPane.add(panelEast_1, BorderLayout.EAST);
         GridBagLayout gbl_panelEast = new GridBagLayout();
@@ -297,6 +313,8 @@ public class MainFrame2 extends JFrame {
         gbl_panelEast.columnWeights = new double[]{0.0, 0.0};
         gbl_panelEast.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panelEast_1.setLayout(gbl_panelEast);
+
+        // Sets up JLabels on the right for the Skills and Times
 
         JLabel lblpsTitelSkills = new JLabel("Skills potentially covered:");
         GridBagConstraints gbc_lblpsTitelSkills = new GridBagConstraints();
@@ -409,7 +427,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsShield.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsShield.gridx = 0;
         gbc_lblpsShield.gridy = 7;
-        lblpsShield.setForeground(gray); // Set text color to red
+        lblpsShield.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsShield, gbc_lblpsShield);
 
         JLabel label_timesShield = new JLabel("0");
@@ -473,7 +491,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsLooting.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsLooting.gridx = 0;
         gbc_lblpsLooting.gridy = 11;
-        lblpsLooting.setForeground(gray); // Set text color to red
+        lblpsLooting.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsLooting, gbc_lblpsLooting);
 
         JLabel label_timesLooting = new JLabel("0");
@@ -570,7 +588,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsInventoryManagement.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsInventoryManagement.gridx = 0;
         gbc_lblpsInventoryManagement.gridy = 17;
-        lblpsInventoryManagement.setForeground(gray); // Set text color to red
+        lblpsInventoryManagement.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsInventoryManagement, gbc_lblpsInventoryManagement);
 
         JLabel label_timesInventoryManagement = new JLabel("0");
@@ -651,7 +669,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPersuasion.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPersuasion.gridx = 0;
         gbc_lblpsPersuasion.gridy = 22;
-        lblpsPersuasion.setForeground(gray); // Set text color to red
+        lblpsPersuasion.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsPersuasion, gbc_lblpsPersuasion);
 
         JLabel label_timesPersuasion = new JLabel("0");
@@ -667,7 +685,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsPrisonerManagement.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsPrisonerManagement.gridx = 0;
         gbc_lblpsPrisonerManagement.gridy = 23;
-        lblpsPrisonerManagement.setForeground(gray); // Set text color to red
+        lblpsPrisonerManagement.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsPrisonerManagement, gbc_lblpsPrisonerManagement);
 
         JLabel label_timesPrisionerManagement = new JLabel("0");
@@ -683,7 +701,7 @@ public class MainFrame2 extends JFrame {
         gbc_lblpsLeadership.insets = new Insets(0, 0, 5, 5);
         gbc_lblpsLeadership.gridx = 0;
         gbc_lblpsLeadership.gridy = 24;
-        lblpsLeadership.setForeground(gray); // Set text color to red
+        lblpsLeadership.setForeground(gray); // Set text color to gray, since it's not covered
         panelEast_1.add(lblpsLeadership, gbc_lblpsLeadership);
 
         JLabel label_timesLeadership = new JLabel("0");
@@ -710,7 +728,8 @@ public class MainFrame2 extends JFrame {
         panelEast_1.add(label_timesTrader, gbc_label_timesTrader);
 
 
-// Add action listeners for the checkboxes
+// Add action listeners for the checkboxes, ActionListeners dictate what the GUI elements does upon interaction
+
         // Create a common action listener template
         ActionListener checkBoxActionListener = e -> {
             JCheckBox checkBox = (JCheckBox) e.getSource(); // Get the source of the event
@@ -721,7 +740,7 @@ public class MainFrame2 extends JFrame {
             companion.setvIsChoosen(isSelected);
             vanillaTableModel.setRowBackgroundColor();
 
-            // Extract data from the JTable and create the list
+            // Extract data from the JTable and create the list (but smol)
             ArrayList<CompanionVanillaSmol> companionVanillaSmolList = new ArrayList<>();
             for (int row = 0; row < vanillaTableModel.getRowCount(); row++) {
                 boolean smolChoosen = vanillaTableModel.getValueAt(row, 0).toString().equals("X");
@@ -735,6 +754,9 @@ public class MainFrame2 extends JFrame {
             for (int i = 0; i < numSkills; i++) {
                 skillCounts[i] = 0;
             }
+
+            // This code block updates a series of labels with the corresponding values from the "skillCounts" array.
+            // Each label represents a specific skill, and the code sets the text of each label to the value of the corresponding skill in the array.
 
             label_timesIronflesh.setText(String.valueOf(skillCounts[Skills.IRONFLESH.getValue()]));
             label_timesPowerStrike.setText(String.valueOf(skillCounts[Skills.POWERSTRIKE.getValue()]));
@@ -946,9 +968,7 @@ public class MainFrame2 extends JFrame {
         lezalitCheckBox.addActionListener(checkBoxActionListener);
         matheldCheckBox.addActionListener(checkBoxActionListener);
 
-
-
-
+        // to hide not relevant Skills for your party
         chckbxOnlyPartyskillsRelevant.addActionListener(e -> {
             if (chckbxOnlyPartyskillsRelevant.isSelected()) {
                 lblpsIronflesh.setVisible(false);
@@ -1025,6 +1045,7 @@ public class MainFrame2 extends JFrame {
                 for (JCheckBox checkBox : checkBoxes) {
                     if(checkBox.isSelected()){
                         checkBox.doClick();
+                        // kinda primitive, but i like the animation
                     }
                 }
 
@@ -1119,7 +1140,7 @@ public class MainFrame2 extends JFrame {
                         + "Information primarily sourced from: Mount & Blade Wiki - Heroes (https://mountandblade.fandom.com/wiki/Heroes)";
 
                 textArea.setText(companionGuideText);
-                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14); // Change 14 to your preferred font size
+                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14);
                 textArea.setFont(verdanaFont);
 
                 // Show the dialog with the text
@@ -1168,7 +1189,7 @@ public class MainFrame2 extends JFrame {
                         "The party skill bonus is applied even if you have the highest rank in the skill.\n\n" +
                         "Please note that although Looting is a party skill, the player should level it to be effective." +
                         "Information primarily sourced from: Mount & Blade Wiki - Skills (https://mountandblade.fandom.com/wiki/Skills)");
-                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14); // Change 14 to your preferred font size
+                Font verdanaFont = new Font("Verdana", Font.PLAIN, 14);
                 textArea.setFont(verdanaFont);
 
                 // Show the dialog with the text
@@ -1180,6 +1201,7 @@ public class MainFrame2 extends JFrame {
             JOptionPane.showMessageDialog(null, "Companion Harmony Visualizer Tool for Mount and Blade Warband Vanilla coded by AL2D in Oktober 2023 (Dc: AL2D#3015) \n Official Website: https://github.com/al2d-x/Companion-Harmony-Visualizer-Tool-by-AL2D", "About", JOptionPane.INFORMATION_MESSAGE);
         });
 
+        // Used to create the exported file... here I was actually helped a lot by CHAT GPT for the String Builder since it kinda confused me
         menuItemExport.addActionListener(e -> {
             JFileChooser fc = new JFileChooser();
             int userChoice = fc.showSaveDialog(null);
@@ -1257,7 +1279,7 @@ public class MainFrame2 extends JFrame {
             }
         });
 
-
+        // I build this in kinda for fun
         menuItemExit.addActionListener(e -> {
             String formattedText =
                             "$$$$$$$\\                      \n" +
@@ -1265,18 +1287,18 @@ public class MainFrame2 extends JFrame {
                             "$$ |  $$ |$$\\   $$\\  $$$$$$\\  \n" +
                             "$$$$$$$\\ |$$ |  $$ |$$  __$$\\ \n" +
                             "$$  __$$\\ $$ |  $$ |$$$$$$$$ |\n" +
-                            "$$ |  $$ |$$ |  $$ |$$   ____|\n" +
+                            "$$ |  $$ |$$ |   $$ |$$   ____|\n" +
                             "$$$$$$$  |\\$$$$$$$ |\\$$$$$$$\\ \n" +
-                            "\\_______/  \\____$$ | \\_______|\n" +
-                            "          $$\\   $$ |          \n" +
-                            "          \\$$$$$$  |          \n" +
-                            "           \\______/           \n";
+                            "\\_______/  \\___$$ | \\_______|\n" +
+                            "            $$\\   $$ |          \n" +
+                            "            \\$$$$$$  |          \n" +
+                            "             \\______/           \n";
 
             JOptionPane pane = new JOptionPane(formattedText, JOptionPane.INFORMATION_MESSAGE);
             JDialog dialog = pane.createDialog("Bye :)");
             dialog.setModal(false);
 
-            Timer timer = new Timer(1500, e1 -> {
+            Timer timer = new Timer(2000, e1 -> {
                 dialog.dispose();
                 System.exit(0);
             });
@@ -1293,13 +1315,17 @@ public class MainFrame2 extends JFrame {
     /**
      * The original code was authored by AL2D and may be subject to modifications by other users.
      * However, please ensure to attribute the tool abbreviation created to AL2D.
+     * Here's a corrected version of your text:
+     * "It took me about 10 days to code everything.
+     * I invested more time in this tool than one might imagine,
+     * but that's probably because I'm not an experienced coder."
      */
-    // Dev 0.8.0
 
-    /**
-     * The preceding code represents the non-optimized version.
-     * Its excessive repetition and size indicate a need for optimization,
-     * which I may or may not provide in the future.
-     */
+    // --- CREDIT ---
+
+    // Original Coder of CHVT: AL2D v1.0.0 (Dc: AL2D #3015)
+    // Add your name here if modified by you
+    // Add your name here if modified by you
+    //...
 }
 

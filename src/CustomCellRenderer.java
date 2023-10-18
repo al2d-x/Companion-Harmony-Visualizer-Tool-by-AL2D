@@ -1,13 +1,15 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-// ...
+// A custom cell renderer for "Noble?" and "Choose?" columns
 
-// Define a custom cell renderer for "Noble?" and "Choose?" columns
+// TableCellRenderers give instructions on how to render the Cells inside of a JTable...
+// Its my first time ever to work with this, and i dont like it honestly but ill still use it
+
+
 class CustomCellRenderer extends DefaultTableCellRenderer {
-    Font font = new Font("Arial", Font.BOLD, 15); // You can adjust the font properties here
+    Font font = new Font("Arial", Font.BOLD, 15); // Font properties
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -25,7 +27,3 @@ class CustomCellRenderer extends DefaultTableCellRenderer {
 
 
 }
-
-// ...
-
-// Set the custom cell renderer for the table

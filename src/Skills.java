@@ -1,3 +1,7 @@
+// Enum to be used with the primitve array
+// for Skills to debloat MainFrame2
+// kinda hardcoded Values, which make code more readable
+
 public enum Skills {
     IRONFLESH(0),
     POWERSTRIKE(1),

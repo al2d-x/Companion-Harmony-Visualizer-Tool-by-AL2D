@@ -1,3 +1,7 @@
+// An abridged class of the original CompanionVanilla Class with the only necessary
+// Attributes for the calculation of the covered skills and the amount...
+// This class gives instruction on how to initiate A Companion but in small
+
 public class CompanionVanillaSmol {
     private boolean vIsChoosen;
     private String vName;

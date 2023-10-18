@@ -1,6 +1,8 @@
+// Original which is the basis for the VanillaTableModel
+// cellColor is a hidden attribute, that is relevant for the coloring of a row
+// This class gives instruction on how to initiate A Companion
+
 public class CompanionVanilla {
-
-
     private boolean vIsChoosen;
     private String vName;
     private String vLikes;
