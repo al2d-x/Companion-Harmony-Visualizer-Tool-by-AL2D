@@ -43,7 +43,7 @@ public class MainFrame2 extends JFrame {
 
         // sets up basics for Window creation of the MainFrame
 
-        setTitle("Companion Harmony Visualizer Tool by AL2D   -   v1.0.0");
+        setTitle("Companion Harmony Visualizer Tool by AL2D   -   v1.1.0");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1157, 864);
 
