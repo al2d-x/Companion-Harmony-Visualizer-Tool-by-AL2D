@@ -148,8 +148,22 @@ public class MainFrame2 extends JFrame {
         JPanel panelNorth = new JPanel();
         contentPane.add(panelNorth, BorderLayout.NORTH);
 
-        JLabel lblNewLabel = new JLabel(" ");
+        // Presets
+
+        JLabel lblNewLabel = new JLabel("Safe presets: ");
         panelNorth.add(lblNewLabel);
+
+        JRadioButton radioButtonpresetA = new JRadioButton("A: Eng");
+        panelNorth.add(radioButtonpresetA);
+
+        JRadioButton radioButtonpresetB = new JRadioButton("B: Eng");
+        panelNorth.add(radioButtonpresetB);
+
+        JRadioButton radioButtonpresetC = new JRadioButton("C Med");
+        panelNorth.add(radioButtonpresetC);
+
+        JRadioButton radioButtonpresetD = new JRadioButton("D: Med");
+        panelNorth.add(radioButtonpresetD);
 
         JPanel panelEast = new JPanel();
         contentPane.add(panelEast, BorderLayout.EAST);
@@ -1030,6 +1044,84 @@ public class MainFrame2 extends JFrame {
                 label_timesPersuasion.setVisible(true);
             }
 
+
+        });
+
+        radioButtonpresetA.addActionListener(e -> {
+            radioButtonpresetB.setSelected(false);
+            radioButtonpresetC.setSelected(false);
+            radioButtonpresetD.setSelected(false);
+
+            buttonReset.doClick();
+
+            artimennerCheckBox.doClick();
+            borchaCheckBox.doClick();
+            matheldCheckBox.doClick();
+            lezalitCheckBox.doClick();
+            rolfCheckBox.doClick();
+
+            alayenCheckBox.doClick();
+            baheshturCheckBox.doClick();
+            firentisCheckBox.doClick();
+
+        });
+
+        radioButtonpresetB.addActionListener(e -> {
+            radioButtonpresetA.setSelected(false);
+            radioButtonpresetC.setSelected(false);
+            radioButtonpresetD.setSelected(false);
+
+            buttonReset.doClick();
+
+            artimennerCheckBox.doClick();
+            borchaCheckBox.doClick();
+            matheldCheckBox.doClick();
+            lezalitCheckBox.doClick();
+            rolfCheckBox.doClick();
+
+            katrinCheckBox.doClick();
+            marnidCheckBox.doClick();
+            nizarCheckBox.doClick();
+
+
+        });
+
+        radioButtonpresetC.addActionListener(e -> {
+            radioButtonpresetA.setSelected(false);
+            radioButtonpresetB.setSelected(false);
+            radioButtonpresetD.setSelected(false);
+
+            buttonReset.doClick();
+
+            bundukCheckBox.doClick();
+            deshaviCheckBox.doClick();
+            klethiCheckBox.doClick();
+            jeremusCheckBox.doClick();
+            ymiraCheckBox.doClick();
+
+            alayenCheckBox.doClick();
+            baheshturCheckBox.doClick();
+            firentisCheckBox.doClick();
+
+
+        });
+
+        radioButtonpresetD.addActionListener(e -> {
+            radioButtonpresetB.setSelected(false);
+            radioButtonpresetC.setSelected(false);
+            radioButtonpresetA.setSelected(false);
+
+            buttonReset.doClick();
+
+            bundukCheckBox.doClick();
+            deshaviCheckBox.doClick();
+            klethiCheckBox.doClick();
+            jeremusCheckBox.doClick();
+            ymiraCheckBox.doClick();
+
+            katrinCheckBox.doClick();
+            marnidCheckBox.doClick();
+            nizarCheckBox.doClick();
 
         });
 
