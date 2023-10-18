@@ -1,17 +1,19 @@
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// The TableModel dictates how the JTable is supposed to be build
+// and yes, you can move around the columns, if you want to break how it looks do it...
+
 public class VanillaTableModel extends AbstractTableModel {
+
+    // Column names on top
     private String[] columnNames = { "Chosen?",
             "Name", "Likes", "Dislikes", "Dislikes", "Hates", "Noble?", "Skills", "Cost", "Color"};
 
     private List<CompanionVanilla> compVList = new ArrayList<>();
 
+    // Extracted the knowledge from Wiki somewhere and put it inside, I didn't actually check if it's correct.
     public VanillaTableModel() {
         compVList.add(new CompanionVanilla(false, "Deshavi", "Klethi", "Borcha", "Rolf", "Hunger, Heavy Casualties, Bunduk as Emissary", false, "Pathfinding, Spotting, Tracking", 0, "standart"));
         compVList.add(new CompanionVanilla(false, "Firentis", "Jeremus", "Nizar", "Katrin", "Robbing Villages, Failing Quests, Rolf as Emissary", true, "Athletics", 0, "standart"));
@@ -34,29 +36,22 @@ public class VanillaTableModel extends AbstractTableModel {
     @Override
     public int getRowCount() {
         return compVList.size();
-    }
+    } // does what the name indicates
 
     @Override
     public int getColumnCount() {
         return columnNames.length;
-    }
+    } // does what the name indicates
 
+    // As far as I understood, this is where the magic happens
+    // The Method checks the List and puts together the data of the table
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         CompanionVanilla companion = compVList.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-
-                 if(companion.isvIsChoosen()){
-                    return "X";
-            } else {
-                     return "\u00A0";
-                 }
-
-
-                // return companion.isvIsChoosen();
-
+                return companion.isvIsChoosen() ? "X" : "\u00A0"; // fyi, its an invisible char
             case 1:
                 return companion.getvName();
             case 2:
@@ -68,16 +63,7 @@ public class VanillaTableModel extends AbstractTableModel {
             case 5:
                 return companion.getvHates();
             case 6:
-
-                 if(companion.isvIsNoble()){
-                    return "X";
-            } else {
-                     return "\u00A0";
-                 }
-
-
-                // return companion.isvIsNoble();
-
+                return companion.isvIsNoble() ? "X" : "\u00A0"; // fyi, its an invisible char
             case 7:
                 return companion.getvSkills();
             case 8:
@@ -112,13 +98,22 @@ public class VanillaTableModel extends AbstractTableModel {
         return null;
     }
 
+    // this is where the logic for the coloring of the cell happens
+    // it sets the last attribute in CompanionVanilla objects, to be
+    // then used by the TableCellRender to color the rows
+
+    // It may to appear not like a lot but i struggled to get this code
+    // done, working in the way I want it to do (it took me 3 days)
+    // I tried different ways and this seems to easiest and most readable which still works
+
+
     public void setRowBackgroundColor() {
-        // First, set all cell colors to "standart" for all companions
+        // First, sets all cell colors to "standart" for all companions
         for (CompanionVanilla companion : compVList) {
             companion.setCellColor("standart");
         }
 
-        // Now, apply the new colorings based on your conditions
+        // Now, applies the new colorings based on the conditions
         for (CompanionVanilla companion : compVList) {
             if (companion.isvIsChoosen()) {
                 String likes = companion.getvLikes();
